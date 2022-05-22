@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+
+        #div{
+            border: 2px solid red;
+            width: 100%;
+            height: 30px;
+            display: flex;
+            gap: 20px;
+            padding-bottom: 10px;
+            padding-top: 5px;
+            border-radius: 5px;
+        }
+
+        #btn{
+            height: 20px;
+            display: block;
+            margin: auto;
+            background-color: teal;
+            color: white;
+            border: none;
+            padding: 10px 15px 25px 20px;
+            border-radius: 5px;
+
+        }
+    </style>
+
+</head>
+<body>
+    
+    <div id="container"></div>
+</body>
+</html>
+
+<script>
+     let arr = JSON.parse(localStorage.getItem("student_data")) || [];
+     arr.map( function(e,i){
+
+        let div = document.createElement("div");
+        div.setAttribute("id","div")
+
+         let p = document.createElement("p");
+         p.innerText = e.name;
+
+         let button = document.createElement("button");
+         button.innerHTML = "Remove";
+         button.setAttribute("id","btn");
+
+         button.addEventListener("click",function(){
+             remove(e,i);
+         })
+
+         div.append(p,button);
+         document.querySelector("#container").append(div);
+     });
+
+
+     let trash = JSON.parse(localStorage.getItem("trash")) || [];
+
+     function remove(e,i) {
+             arr.splice(i);
+             trash.push(e);
+             localStorage.setItem("student_data",JSON.stringify(arr));
+             localStorage.setItem("trash",JSON.stringify(trash));
+             window.location.reload();
+     }
+</script>

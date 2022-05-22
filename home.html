@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+
+        #nav{
+            border: 2px solid black;
+            height: 30px;
+            border-radius: 5px;
+            width: 100%;
+            display: flex;
+            gap: 20px;
+            justify-content: space-around;
+            
+        }
+        h2{
+            text-align: center;   
+        }
+
+        #box {
+            width: 250px;
+            margin: auto;
+            margin-top: 100px;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+        }
+
+        #form>input{
+           width: 90%;
+           display: block;
+            margin: auto;
+        }
+
+        #submit{
+            display: block;
+            margin: auto;
+            border: none;
+            padding: 10px;
+            background-color: teal;
+            color: white;
+            border-radius: 5px;
+        }
+
+    
+    </style>
+</head>
+<body>
+    
+    <div id="nav"></div>
+
+
+
+    <div id="box">
+    <h2>Student data</h2>
+    <form id="form" onsubmit="details()">
+
+        <input id="name" type="text" placeholder="name">
+        <br>
+       
+        <input id="course" type="text" placeholder="course">
+        <br>
+        
+        <input id="unit" type="number" placeholder="unit">
+        <br>
+      
+        <input id="image" type="text" placeholder="image">
+        <br>
+       
+        <input id="batch" type="number" placeholder="batch">
+        <br>
+      
+        <button id="submit" onclick="submit1()">submit</button>
+    </div>
+    </form>
+</body>
+</html>
+
+<script>
+
+let arr = JSON.parse(localStorage.getItem("student_data")) || [];
+
+  function stu_details(a, b, c, d, e) {
+         this.name = a;
+         this.course = b;
+         this.unit = c;
+         this.image = d;
+         this.batch = e;
+  }
+
+  function  details() {
+
+    event.preventDefault();
+
+    let form =  document.getElementById("form");
+
+    let name = form.name.value;
+    let course = form.course.value;
+    let unit = form.unit.value;
+    let image = form.image.src;
+    let batch = form.batch.value;
+
+    let x = new stu_details(name, course, unit, image, batch);
+    arr.push(x);
+    localStorage.setItem("student_data",JSON.stringify(arr));
+
+    }
+
+
+    let p1 = document.getElementById("p1");
+    let p2 = document.getElementById("p2");
+    let nav = document.getElementById("nav");
+
+    function calculate() {
+
+        let arr = JSON.parse(localStorage.getItem("student_data")) || [];
+        let obj = {};
+
+        for(let a=0; a<arr.length; a++){
+            if(obj[arr[a].batch]  === undefined) {
+                obj[arr[a].batch] = 1;
+            }
+            else{
+                obj[arr[a].batch] = obj[arr[a].batch] + 1;
+            }
+        }
+    }
+
+    calculate();
+
+
+        // for(var key in obj){
+
+        //     nav.innerText = key;
+        // }
+        // console.log(arr);
+
+
+    function submit1() {
+        window.location.href = "dashboard.html"
+    }
+
+</script>
